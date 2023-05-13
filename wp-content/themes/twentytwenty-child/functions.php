@@ -3,6 +3,10 @@
 add_action( 'wp_enqueue_scripts', 'twenty_twenty_child_styles_enqueue' );
 add_action( 'after_setup_theme', 'twenty_twenty_child_hide_admin_bar' );
 
+if ( file_exists( get_theme_file_path( 'inc/post-types.php' ) ) ) {
+	include get_theme_file_path( 'inc/post-types.php' );
+}
+
 function twenty_twenty_child_styles_enqueue() {
 	$parent_handle = 'twentytwenty-style';
 	$theme        = wp_get_theme();
@@ -28,6 +32,7 @@ function twenty_twenty_child_hide_admin_bar() {
 
 	global $current_user;
 
+	// Disable wp admin bar for this user, using code
 	if ( $current_user->user_login !== 'wp-test' ) {
 		return;
 	}
